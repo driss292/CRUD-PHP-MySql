@@ -40,6 +40,10 @@ if ($_GET["id"] && !empty($_GET["id"])) {
     <main class="container">
         <div class="col-md-12 mt-5">
             <h2>Article n°<?= $article["id"] ?> : <?= $article["name"] ?></h2>
+
+            <p>Price : <?= $article["price"] ?></p>
+            <p>Stock : <?= $article["stock"] ?></p>
+            <a href="index.php" class="btn btn-danger">Back</a>
         </div>
     </main>
 
