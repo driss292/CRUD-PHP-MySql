@@ -1,6 +1,28 @@
 <?php
+session_start();
 $title = "Create";
 require_once("database/connection.php");
+if (!empty($_POST["name"]) && !empty($_POST["price"]) && !empty($_POST["stock"])) {
+    $name = strip_tags($_POST["name"]);
+    $price = strip_tags($_POST["price"]);
+    $stock = strip_tags($_POST["stock"]);
+
+    $sql = "INSERT INTO articles(name,price,stock) VALUES (:name,:price,:stock)";
+    $article = $db->prepare($sql);
+
+    // Liaison
+    $article->bindValue(":name", $name, PDO::PARAM_STR);
+    $article->bindValue(":price", $price, PDO::PARAM_STR);
+    $article->bindValue(":stock", $stock, PDO::PARAM_STR);
+
+    // Execution
+    $article->execute();
+
+    $_SESSION["message"] = "Votre articles a bien été sauvegardé dans la BDD !";
+    header("location: index.php");
+} else {
+    $_SESSION["message"] = "Vous devez remplir tous les champs !";
+}
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +54,10 @@ require_once("database/connection.php");
                     <div class="form-group">
                         <label for="stock">Stock</label>
                         <input type="text" id="stock" name="stock" class="form-control">
+                    </div>
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                        <a href="index.php" class="btn btn-danger">Back</a>
                     </div>
                 </form>
             </div>
