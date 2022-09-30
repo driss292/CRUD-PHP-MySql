@@ -7,8 +7,6 @@ $sql = 'SELECT * FROM articles';
 $data = $db->prepare($sql);
 $data->execute();
 $articles = $data->fetchAll(PDO::FETCH_ASSOC);
-
-// var_dump($articles);
 ?>
 
 <!DOCTYPE html>
@@ -20,13 +18,25 @@ $articles = $data->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script>
 </head>
 
 <body>
+
     <h1 class="mt-5 text-center">CRUD en PHP</h1>
+
     <div class="container">
         <div class="row">
             <section class="mt-5">
+                <?php if ($_SESSION["message"]) : ?>
+                    <div class="alert">
+                        <p class="alert alert-success">
+                            <?php echo $_SESSION["message"];
+                            $_SESSION["message"] = "";
+                            ?>
+                        </p>
+                    </div>
+                <?php endif ?>
                 <h2>Liste des articles</h2>
                 <a href="create.php" class="btn btn-primary">Ajouter un article</a>
                 <table class="table mt-3">
@@ -46,9 +56,9 @@ $articles = $data->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?= $article["price"] ?></td>
                                 <td><?= $article["stock"] ?></td>
                                 <td>
-                                    <a href="#" class="btn btn-primary">Show</a>
-                                    <a href="#" class="btn btn-success">Edit</a>
-                                    <a href="#" class="btn btn-danger">Delete</a>
+                                    <a href="show.php?id=<?= $article["id"] ?>" class="btn btn-primary">Show</a>
+                                    <a href="edit.php?id=<?= $article["id"] ?>" class="btn btn-success">Edit</a>
+                                    <a href="delete.php?id=<?= $article["id"] ?>" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -57,10 +67,8 @@ $articles = $data->fetchAll(PDO::FETCH_ASSOC);
 
             </section>
         </div>
-
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>

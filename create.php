@@ -3,10 +3,13 @@ session_start();
 $title = "Create";
 require_once("database/connection.php");
 if (!empty($_POST["name"]) && !empty($_POST["price"]) && !empty($_POST["stock"])) {
+
+    // Déclaration variables
     $name = strip_tags($_POST["name"]);
     $price = strip_tags($_POST["price"]);
     $stock = strip_tags($_POST["stock"]);
 
+    // Déclaration requête
     $sql = "INSERT INTO articles(name,price,stock) VALUES (:name,:price,:stock)";
     $article = $db->prepare($sql);
 
@@ -18,7 +21,7 @@ if (!empty($_POST["name"]) && !empty($_POST["price"]) && !empty($_POST["stock"])
     // Execution
     $article->execute();
 
-    $_SESSION["message"] = "Votre articles a bien été sauvegardé dans la BDD !";
+    $_SESSION["message"] = "Votre articles a bien été sauvegardé dans votre BDD !";
     header("location: index.php");
 } else {
     $_SESSION["message"] = "Vous devez remplir tous les champs !";
@@ -34,10 +37,13 @@ if (!empty($_POST["name"]) && !empty($_POST["price"]) && !empty($_POST["stock"])
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script>
 </head>
 
 <body>
+
     <h1 class="mt-5 text-center">CRUD en PHP</h1>
+
     <main class="container mt-5">
         <div class="col-md-12">
             <h2>Création d'un article</h2>
@@ -64,7 +70,6 @@ if (!empty($_POST["name"]) && !empty($_POST["price"]) && !empty($_POST["stock"])
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>
